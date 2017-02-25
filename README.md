@@ -5,10 +5,10 @@ I'm planning to do this with a `MemoryBoard` class that is then imported by anot
 Idea for this: I got tired of building the text-based games suggested in [Learn Python the Hard Way](https://learnpythonthehardway.org/book/ex45.html),
 so I decided to do this instead.
 
-**Python Version**
+**Python Version**  
 Originally started doing this on an old Mac running Python 2.6.1.  Doing my best to make it forward-compatible
 
-**Packages Used**
+**Packages Used**  
 * numpy
 * urllib
 * math
