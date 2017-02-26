@@ -4,6 +4,7 @@
 from math import floor
 import numpy as np
 from urllib import urlopen
+from itertools import product
 
 # Pulling a certain number of random words from
 # this website will supply the content of the cards
@@ -14,13 +15,13 @@ class MemoryBoard(object):
 
     def __init__(self, n_pairs, rows=0, columns=0,\
  		 board = None, pair_names = None, \
-		 position_dict = None):
+		 solution_dict = None):
         self.n_pairs = n_pairs
 	self.columns = columns 
 	self.rows = rows
 	self.board = board
 	self.pair_names = pair_names
-	self.position_dict = position_dict
+	self.solution_dict = solution_dict
 
     @property
     def columns(self):
@@ -67,12 +68,27 @@ class MemoryBoard(object):
 	    random_indices = np.sort(np.random.randint(0, len(words),\
 					   size = self.n_pairs))
 	    unique_test = np.sort(np.unique(random_indices))        
-	self.__pair_names = [words[i] for i in random_indices]
+	self.__pair_names = np.array([words[i] for i in random_indices])
+    
+    @property
+    def solution_dict(self):
+	return self.__solution_dict
 
+    @solution_dict.setter
+    def solution_dict(self, solution_dict):
+	position_list = [b for b in product([i for i in range(self.rows)], [i for i in range(self.columns)])]
+	card_names = np.repeat(self.pair_names, repeats = 2)
+	np.random.shuffle(card_names)
+	output = {}
+	for i in range(len(position_list)):
+	    output[position_list[i]] = card_names[i]
+	self.__solution_dict = output
+	
 #Just for debugging 
 if __name__ == '__main__':
     test1 = MemoryBoard(10)
     print(test1.rows)
     print(test1.columns)
     print(test1.board) 
-    print(test1.pair_names)	
+    print(test1.pair_names)
+    print(test1.solution_dict)	
