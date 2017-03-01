@@ -77,7 +77,7 @@ class MemoryBoard(object):
 	@board.setter
 	def board(self, board):
 		board_vals = np.repeat('X', repeats=2 * self.n_pairs)
-		self._board = np.mat(board_vals).reshape((self.rows, self.columns))
+		self._board = np.mat(board_vals, dtype = 'object').reshape((self.rows, self.columns))
 
 	@property
 	def pair_names(self):
@@ -120,8 +120,7 @@ if __name__ == '__main__':
 	print(test1.rows)
 	print(test1.columns)
 	print(test1.board) 
-	print(test1.pair_names)
-	print(test1.solution_dict)
 	# Can i update the board in place?
+	#ind1, ind2 = int(input('choose indices:').split())
 	test1.board[0,0] = 'kitten'
 	print(test1.board)	
