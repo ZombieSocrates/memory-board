@@ -84,18 +84,10 @@ class MemoryBoard(object):
 		return self._pair_names
 
 	# pair_names  = the words that will be underneath the X's in the 
-	# MemoryBoard.board object.  SIDE NOTE: np.random.choice()
+	# MemoryBoard.board object.  SIDE NOTE/FUN FACT: np.random.choice()
 	# is only available in numpy version >= 1.7
 	@pair_names.setter
 	def pair_names(self, pair_names):
-	# random_indices = np.sort(np.random.randint(0, len(words),\
-	# 				   size = self.n_pairs))
-	# unique_test = np.sort(np.unique(random_indices))
-	# while np.array_equal(random_indices,unique_test) is False:
-	# 	random_indices = np.sort(np.random.randint(0, len(words),\
-	# 				   size = self.n_pairs))
-	# 	unique_test = np.sort(np.unique(random_indices))		
-		# self.pair_names = np.array([words[i] for i in random_indices])
 		self._pair_names = np.random.choice(words, size = self.n_pairs, replace = False)
 	
 	@property
@@ -116,11 +108,14 @@ class MemoryBoard(object):
 	
 #Just for debugging 
 if __name__ == '__main__':
-	test1 = MemoryBoard(10)
+	test_pairs = int(input('Number of pairs?' ))
+	test1 = MemoryBoard(test_pairs)
 	print(test1.rows)
 	print(test1.columns)
 	print(test1.board) 
 	# Can i update the board in place?
-	#ind1, ind2 = int(input('choose indices:').split())
-	test1.board[0,0] = 'kitten'
+	row_col = [int(b) for b in input('Choose card to flip by index: ').split()]
+	value = test1.solution_dict[(row_col[0], row_col[1])]
+	print('Value at position (%s, %s): %s' % (row_col[0], row_col[1], value))
+	test1.board[row_col[0], row_col[1]] = value
 	print(test1.board)	
