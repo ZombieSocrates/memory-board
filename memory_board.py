@@ -103,7 +103,7 @@ class MemoryBoard(object):
 		np.random.shuffle(card_names)
 		output = {}
 		for i in range(len(position_list)):
-			output[position_list[i]] = card_names[i]
+			output[position_list[i]] = card_names[i].decode('UTF-8')
 		self._solution_dict = output
 	
 #Just for debugging 
