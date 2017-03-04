@@ -59,13 +59,14 @@ class MemoryBoard(object):
 	# 'X' values (representing backs of cards). 	
 	@property
 	def board(self):
-		return self._board
+	 	return self._board
 
 	@board.setter
 	def board(self, board):
 		board_vals = np.repeat('X', repeats=2 * self.n_pairs)
 		board_mat = np.mat(board_vals, dtype = 'object').reshape((self.rows, self.columns))
 		self._board = board_mat
+		
 
 	# pair_names  = the words that will be underneath the X's in the 
 	# MemoryBoard.board object.  SIDE NOTE/FUN FACT: np.random.choice()
@@ -85,6 +86,10 @@ class MemoryBoard(object):
 		for i in range(len(position_list)):
 			output[position_list[i]] = card_names[i].decode('UTF-8')
 		return output
+
+	def board_update(self, row, col, value):
+			self.board[row, col] = value
+	
 	
 #Just for debugging 
 if __name__ == '__main__':
@@ -94,8 +99,8 @@ if __name__ == '__main__':
 	print(test1.columns)
 	print(test1.board) 
 	# # Can i update the board in place?
-	row_col = [int(b) for b in input('Choose card to flip by index: ').split()]
-	value = test1.solution_dict[(row_col[0], row_col[1])]
-	print('Value at position (%s, %s): %s' % (row_col[0], row_col[1], value))
-	test1.board[row_col[0], row_col[1]] = value
+	row_col = [int(b) for b in input('Choose position to flip, separated by space: ').split()]
+	Name = test1.solution_dict[(row_col[0], row_col[1])]
+	print('Name at position (%s, %s): %s' % (row_col[0], row_col[1], Name))
+	test1.board_update(row_col[0], row_col[1], Name)
 	print(test1.board)	
