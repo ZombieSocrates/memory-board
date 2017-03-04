@@ -56,7 +56,8 @@ class MemoryBoard(object):
 		return int((2 * self.n_pairs)/self.columns)
 
 	# board = a rows by columns np.matrix that defaults with all
-	# 'X' values (representing backs of cards). 	
+	# 'X' values (representing backs of cards). Because board needs
+	# to be writable, I use the setter decorator here	
 	@property
 	def board(self):
 	 	return self._board
@@ -66,11 +67,15 @@ class MemoryBoard(object):
 		board_vals = np.repeat('X', repeats=2 * self.n_pairs)
 		board_mat = np.mat(board_vals, dtype = 'object').reshape((self.rows, self.columns))
 		self._board = board_mat
-		
+
+	 # and I provide a board_update method for revealing a card
+	 # when the player guesses
+	def board_update(self, row, col, value):
+			self.board[row, col] = value		
 
 	# pair_names  = the words that will be underneath the X's in the 
-	# MemoryBoard.board object.  SIDE NOTE/FUN FACT: np.random.choice()
-	# is only available in numpy version >= 1.7
+	# MemoryBoard.board object.  This just chooses randomly from the
+	# worlds that urlib.requests pulled down earlier.
 	@property
 	def pair_names(self):
 		return np.random.choice(words, size = self.n_pairs, replace = False)
@@ -87,9 +92,6 @@ class MemoryBoard(object):
 			output[position_list[i]] = card_names[i].decode('UTF-8')
 		return output
 
-	def board_update(self, row, col, value):
-			self.board[row, col] = value
-	
 	
 #Just for debugging 
 if __name__ == '__main__':
